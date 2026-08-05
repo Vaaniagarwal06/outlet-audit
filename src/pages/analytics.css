@@ -1,0 +1,493 @@
+
+.analytics-page{
+
+    padding:40px;
+    background:#f5f7fb;
+    min-height:100vh;
+
+}
+
+.analytics-header small{
+
+    color:#14532d;
+    font-weight:700;
+    letter-spacing:2px;
+
+}
+
+.analytics-header h1{
+
+    font-size:52px;
+    margin-top:8px;
+
+}
+
+.analytics-header p{
+
+    color:#6b7280;
+    margin-top:10px;
+
+}
+
+.analytics-tabs{
+
+    display:flex;
+    gap:12px;
+    margin-top:35px;
+    margin-bottom:30px;
+
+}
+
+.analytics-tabs button{
+
+    padding:12px 26px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:white;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+    transition:.25s;
+
+}
+
+.analytics-tabs button.active{
+
+    background:#14532d;
+
+    color:white;
+
+}
+.filter-bar{
+
+    display:grid;
+
+    grid-template-columns:repeat(6,1fr) auto;
+
+    gap:18px;
+
+    background:white;
+
+    padding:24px;
+
+    border-radius:18px;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.05);
+
+    margin-bottom:28px;
+
+}
+
+.filter-group{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:8px;
+
+}
+
+.filter-group label{
+
+    font-size:13px;
+
+    font-weight:600;
+
+    color:#6b7280;
+
+}
+
+.filter-group select,
+.filter-group input{
+
+    height:46px;
+
+    border:1px solid #e5e7eb;
+
+    border-radius:10px;
+
+    padding:0 12px;
+
+    background:white;
+
+    font-size:14px;
+
+}
+
+.primary-btn{
+
+    align-self:end;
+
+    height:46px;
+
+    padding:0 24px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#166534;
+
+    color:white;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+}
+
+
+.analytics-filter select,
+.analytics-filter input{
+
+    padding:12px;
+
+    border:1px solid #ddd;
+
+    border-radius:10px;
+
+}
+
+.analytics-content{
+
+    margin-top:40px;
+
+}.analytics-grid{
+
+    display:grid;
+
+    grid-template-columns:2fr 1fr;
+
+    gap:24px;
+
+    margin-top:30px;
+
+}
+
+.analytics-left{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:24px;
+
+}
+
+.analytics-right{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:24px;
+
+}
+.department-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:16px 0;
+    border-bottom:1px solid #edf2f7;
+}
+
+.department-row:last-child{
+    border-bottom:none;
+}
+
+.department-info{
+    display:flex;
+    flex-direction:column;
+}
+
+.department-info strong{
+    font-size:15px;
+}
+
+.department-info small{
+    color:#64748b;
+    margin-top:4px;
+}
+
+.department-score{
+    font-size:18px;
+    font-weight:700;
+    color:#166534;
+}
+.leaderboard-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:16px 0;
+    border-bottom:1px solid #edf2f7;
+}
+
+.leaderboard-row:last-child{
+    border-bottom:none;
+}
+
+.leaderboard-left{
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
+
+.rank-circle{
+    width:36px;
+    height:36px;
+    border-radius:50%;
+    background:#166534;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:700;
+}
+
+.leaderboard-right{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.score{
+    font-weight:700;
+    font-size:18px;
+}
+
+.trend-up{
+    color:#16a34a;
+    font-weight:700;
+}
+
+.trend-down{
+    color:#dc2626;
+    font-weight:700;
+}
+.calendar-card{
+    background:#fff;
+    border-radius:22px;
+    padding:35px;
+    margin-top:30px;
+    box-shadow:0 12px 30px rgba(0,0,0,.06);
+}
+
+.calendar-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+}
+
+.calendar-top button{
+    width:42px;
+    height:42px;
+    border:none;
+    border-radius:50%;
+    background:#f3f4f6;
+    cursor:pointer;
+    font-size:20px;
+}
+
+.calendar-grid{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:15px;
+}
+
+.calendar-heading{
+    text-align:center;
+    font-weight:700;
+    color:#64748b;
+    padding-bottom:12px;
+}
+
+.calendar-day{
+    height:110px;
+    border-radius:16px;
+    border:1px solid #e5e7eb;
+    padding:12px;
+    background:white;
+    transition:.2s;
+    cursor:pointer;
+}
+
+.calendar-day:hover{
+    background:#f8fafc;
+    transform:translateY(-2px);
+}
+
+.day-number{
+    font-weight:700;
+    font-size:18px;
+}
+
+.audit-dot{
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    margin-top:12px;
+}
+
+.audit-dot.green{
+    background:#10b981;
+}
+/* ===========================
+   LEADERBOARD
+=========================== */
+
+.leaderboard-filters{
+
+    display:grid;
+    
+    grid-template-columns:repeat(4,1fr);
+    
+    gap:18px;
+    
+    margin:30px 0;
+    
+    }
+    
+    .leaderboard-filters select{
+    
+    padding:14px;
+    
+    border-radius:14px;
+    
+    border:1px solid #E2E8F0;
+    
+    background:white;
+    
+    }
+    
+    .leaderboard-kpis{
+    
+    display:grid;
+    
+    grid-template-columns:repeat(4,1fr);
+    
+    gap:22px;
+    
+    margin-bottom:30px;
+    
+    }
+    
+    .leader-card{
+    
+    background:white;
+    
+    border-radius:22px;
+    
+    padding:24px;
+    
+    box-shadow:0 8px 24px rgba(15,23,42,.06);
+    
+    }
+    
+    .leader-card span{
+    
+    color:#64748B;
+    
+    font-size:14px;
+    
+    }
+    
+    .leader-card h2{
+    
+    margin:14px 0;
+    
+    font-size:34px;
+    
+    color:#0F172A;
+    
+    }
+    
+    .leader-card p{
+    
+    margin:0;
+    
+    color:#14B8A6;
+    
+    font-weight:600;
+    
+    }
+    
+    .leaderboard-grid{
+    
+    display:grid;
+    
+    grid-template-columns:2fr 1fr;
+    
+    gap:24px;
+    
+    margin-bottom:24px;
+    
+    }
+    
+    .leaderboard-card{
+    
+    background:white;
+    
+    border-radius:22px;
+    
+    padding:28px;
+    
+    box-shadow:0 8px 24px rgba(15,23,42,.06);
+    
+    }
+    
+    .chart-placeholder{
+    
+    height:320px;
+    
+    display:flex;
+    
+    align-items:center;
+    
+    justify-content:center;
+    
+    background:#F8FAFC;
+    
+    border:2px dashed #CBD5E1;
+    
+    border-radius:16px;
+    
+    font-weight:600;
+    
+    color:#64748B;
+    
+    }
+    
+    .ranking-table{
+    
+    width:100%;
+    
+    border-collapse:collapse;
+    
+    margin-top:20px;
+    
+    }
+    
+    .ranking-table th{
+    
+    text-align:left;
+    
+    padding-bottom:18px;
+    
+    color:#64748B;
+    
+    }
+    
+    .ranking-table td{
+    
+    padding:16px 0;
+    
+    border-top:1px solid #EEF2F7;
+    
+    }
