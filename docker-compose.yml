@@ -1,0 +1,26 @@
+services:
+  mongo:
+    image: mongo:8
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - outlet_audit_data:/data/db
+  api:
+    build: ./backend
+    environment:
+      MONGO_URL: mongodb://mongo:27017
+      MONGO_DATABASE: outlet_audit
+      CORS_ORIGINS: http://localhost:5173
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mongo
+  web:
+    build: .
+    ports:
+      - "5173:80"
+    depends_on:
+      - api
+volumes:
+  outlet_audit_data:
