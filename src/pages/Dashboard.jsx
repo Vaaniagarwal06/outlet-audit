@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import FilterBar from "../components/FilterBar";
@@ -11,20 +13,41 @@ import RecentAudits from "../components/RecentAudits";
 import "../dashboard/dashboard.css";
 
 export default function Dashboard() {
+
+  const [filters, setFilters] = useState({
+    outlet: "",
+    brand: "",
+    status: "",
+    from: "",
+    to: ""
+  });
+
+  const handleApplyFilters = () => {
+    console.log("Filters Applied:", filters);
+
+    // Next step:
+    // We'll call the backend API here
+  };
+
   return (
     <div className="dashboard">
+
       <Sidebar />
 
       <main className="dashboard-content">
+
         <Header />
 
-        <FilterBar />
+        <FilterBar
+          filters={filters}
+          setFilters={setFilters}
+          onApply={handleApplyFilters}
+        />
 
         <KPIGrid />
 
         <div className="dashboard-row">
           <ChartCard />
-
           <AlertsPanel />
         </div>
 
@@ -33,7 +56,9 @@ export default function Dashboard() {
         <DepartmentPanel />
 
         <RecentAudits />
+
       </main>
+
     </div>
   );
 }

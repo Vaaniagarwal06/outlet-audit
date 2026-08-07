@@ -1,92 +1,110 @@
-export default function FilterBar() {
+export default function FilterBar({
+  filters,
+  setFilters,
+  onApply
+}) {
 
-    return (
-  
-      <section className="filter-bar">
-  
-        <div className="filter-group">
-  
-          <label>Outlet</label>
-  
-          <select>
-            <option>All Outlets</option>
-            <option>Malda</option>
-            <option>Raiganj</option>
-            <option>Cooch Behar</option>
-          </select>
-  
-        </div>
-  
-        <div className="filter-group">
-  
-          <label>Brand</label>
-  
-          <select>
-            <option>All Brands</option>
-            <option>Desi Kadhai</option>
-            <option>Anna's Kitchen</option>
-            <option>Little China</option>
-            <option>Burg On</option>
-            <option>Bake & Shake</option>
-          </select>
-  
-        </div>
-  
-        <div className="filter-group">
-  
-          <label>Department</label>
-  
-          <select>
-            <option>All Departments</option>
-            <option>Admin</option>
-            <option>Cashier</option>
-            <option>Kitchen</option>
-            <option>Housekeeping</option>
-            <option>Security</option>
-            <option>Store</option>
-            <option>Management</option>
-          </select>
-  
-        </div>
-  
-        <div className="filter-group">
-  
-          <label>Status</label>
-  
-          <select>
-            <option>All Status</option>
-            <option>Completed</option>
-            <option>Delayed</option>
-            <option>Failed</option>
-            <option>Pending</option>
-          </select>
-  
-        </div>
-  
-        <div className="filter-group">
-  
-          <label>From</label>
-  
-          <input type="date" />
-  
-        </div>
-  
-        <div className="filter-group">
-  
-          <label>To</label>
-  
-          <input type="date" />
-  
-        </div>
-  
-        <button className="primary-btn">
-  
-          Apply Filters
-  
-        </button>
-  
-      </section>
-  
-    );
-  
-  }
+  return (
+
+    <section className="filter-bar">
+
+      <div className="filter-group">
+        <label>Outlet</label>
+
+        <select
+          value={filters.outlet}
+          onChange={(e) =>
+            setFilters({
+              ...filters,
+              outlet: e.target.value
+            })
+          }
+        >
+          <option value="">All Outlets</option>
+          <option value="Malda">Malda</option>
+          <option value="Raiganj">Raiganj</option>
+          <option value="Cooch Behar">Cooch Behar</option>
+        </select>
+      </div>
+
+      <div className="filter-group">
+        <label>Brand</label>
+
+        <select
+          value={filters.brand}
+          onChange={(e) =>
+            setFilters({
+              ...filters,
+              brand: e.target.value
+            })
+          }
+        >
+          <option value="">All Brands</option>
+          <option value="Desi Kadhai">Desi Kadhai</option>
+          <option value="Anna's Kitchen">Anna's Kitchen</option>
+          <option value="Little China">Little China</option>
+          <option value="Burg On">Burg On</option>
+          <option value="Bake & Shake">Bake & Shake</option>
+        </select>
+      </div>
+
+      <div className="filter-group">
+        <label>Status</label>
+
+        <select
+          value={filters.status}
+          onChange={(e) =>
+            setFilters({
+              ...filters,
+              status: e.target.value
+            })
+          }
+        >
+          <option value="">All Status</option>
+          <option value="completed">Completed</option>
+          <option value="in_progress">In Progress</option>
+        </select>
+      </div>
+
+      <div className="filter-group">
+        <label>From</label>
+
+        <input
+          type="date"
+          value={filters.from}
+          onChange={(e) =>
+            setFilters({
+              ...filters,
+              from: e.target.value
+            })
+          }
+        />
+      </div>
+
+      <div className="filter-group">
+        <label>To</label>
+
+        <input
+          type="date"
+          value={filters.to}
+          onChange={(e) =>
+            setFilters({
+              ...filters,
+              to: e.target.value
+            })
+          }
+        />
+      </div>
+
+      <button
+        className="primary-btn"
+        onClick={onApply}
+      >
+        Apply Filters
+      </button>
+
+    </section>
+
+  );
+
+}
