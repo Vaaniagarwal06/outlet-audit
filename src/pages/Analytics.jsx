@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useAudits } from "../AuditContext";
 import Header from "../components/Header";
 import FilterBar from "../components/FilterBar";
 import KPIGrid from "../components/KPIGrid";
@@ -12,6 +13,7 @@ import "./analytics.css";
 export default function Analytics() {
 
   const [view, setView] = useState("weekly");
+  const { filters, setFilters } = useAudits();
 
   return (
 
@@ -62,7 +64,11 @@ export default function Analytics() {
 
       </div>
 
-      <FilterBar />
+      <FilterBar
+  filters={filters}
+  setFilters={setFilters}
+  onApply={() => {}}
+/>
 
 <KPIGrid />
 

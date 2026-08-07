@@ -22,6 +22,13 @@ export function AuditProvider({ children }) {
   const [progress, setProgress] = useState(() => load(PROGRESS_STORAGE, {}))
   const [lastAuditor, setLastAuditor] = useState(() => localStorage.getItem(AUDITOR_STORAGE) || '')
   const [cloudState, setCloudState] = useState('checking')
+  const [filters, setFilters] = useState({
+    outlet: "",
+    brand: "",
+    status: "",
+    from: "",
+    to: "",
+  });
 
   useEffect(() => save(AUDIT_STORAGE, audits), [audits])
   useEffect(() => save(PROGRESS_STORAGE, progress), [progress])
@@ -91,18 +98,77 @@ export function AuditProvider({ children }) {
     seen.add(index)
     return { ...current, [id]: [...seen].sort((a, b) => a - b) }
   }), [])
+  const filteredAudits = useMemo(() => {
 
+    return audits.filter((audit) => {
+  
+      if (filters.outlet && audit.outletName !== filters.outlet)
+        return false;
+  
+      if (filters.brand && audit.brand !== filters.brand)
+        return false;
+  
+      if (filters.status && audit.status !== filters.status)
+        return false;
+  
+      if (filters.from) {
+        const from = new Date(filters.from);
+        if (new Date(audit.dateTime) < from)
+          return false;
+      }
+  
+      if (filters.to) {
+        const to = new Date(filters.to);
+        to.setHours(23, 59, 59, 999);
+  
+        if (new Date(audit.dateTime) > to)
+          return false;
+      }
+  
+      return true;
+  
+    });
+  
+  }, [audits, filters]);
+  
   const value = useMemo(() => ({
-    audits, lastAuditor, cloudState, beginAudit, updateAudit, removeAudit, visit,
-    visited: (audit) => audit.status === 'completed' ? 12 : (progress[audit.id] || []),
+    audits,
+    filteredAudits,
+    filters,
+    setFilters,
+    lastAuditor,
+    cloudState,
+    beginAudit,
+    updateAudit,
+    removeAudit,
+    visit,
+    visited: (audit) =>
+      audit.status === "completed" ? 12 : (progress[audit.id] || []),
     getAudit: (id) => audits.find((audit) => audit.id === id),
-  }), [audits, beginAudit, cloudState, lastAuditor, progress, removeAudit, updateAudit, visit])
-
-  return <AuditContext.Provider value={value}>{children}</AuditContext.Provider>
-}
-
-export const useAudits = () => {
-  const context = useContext(AuditContext)
-  if (!context) throw new Error('useAudits must be used within AuditProvider')
-  return context
-}
+  }), [
+    audits,
+    filteredAudits,
+    filters,
+    lastAuditor,
+    cloudState,
+    beginAudit,
+    updateAudit,
+    removeAudit,
+    visit,
+    progress,
+  ]);
+  
+  return (
+    <AuditContext.Provider value={value}>
+      {children}
+    </AuditContext.Provider>
+  );
+  }
+  
+  export const useAudits = () => {
+    const context = useContext(AuditContext);
+    if (!context) {
+      throw new Error("useAudits must be used within AuditProvider");
+    }
+    return context;
+  };
