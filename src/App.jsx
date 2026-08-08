@@ -89,7 +89,22 @@ function NewAudit() {
   }
   const update = (field) => (event) => setForm((value) => ({ ...value, [field]: event.target.value }))
   return <Layout><section className="form-page"><Link className="back-link" to="/"><ArrowLeft size={17} /> Audit register</Link><div className="form-heading"><p className="eyebrow">NEW INSPECTION</p><h1>Start an outlet audit</h1><p>Set the context once. Your audit is saved as soon as it begins.</p></div><form className="audit-form" onSubmit={submit}>
-    <label>Outlet name<input autoFocus required maxLength="120" value={form.outletName} onChange={update('outletName')} placeholder="e.g. Malda Food Court" /></label>
+   <label>
+  Outlet name
+
+  <select
+    autoFocus
+    required
+    value={form.outletName}
+    onChange={update("outletName")}
+  >
+    <option value="">Select outlet</option>
+    <option value="Malda">Malda</option>
+    <option value="Raiganj">Raiganj</option>
+    <option value="Cooch Behar">Cooch Behar</option>
+  </select>
+
+</label>
     <label>Brand<select required value={form.brand} onChange={update('brand')}><option value="" disabled>Select brand</option>{BRANDS.map((item) => <option key={item}>{item}</option>)}</select></label>
     <label>Auditor name<input required maxLength="120" value={form.auditorName} onChange={update('auditorName')} placeholder="Your full name" /></label>
     <button className="button primary form-submit" type="submit">Begin Audit <ArrowRight size={18} /></button>
