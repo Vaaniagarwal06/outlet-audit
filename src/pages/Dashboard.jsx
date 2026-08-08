@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useCallback } from "react";
+import { useAudits } from "../AuditContext";
 
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
@@ -12,22 +13,29 @@ import RecentAudits from "../components/RecentAudits";
 
 import "../dashboard/dashboard.css";
 
+const DEFAULT_FILTERS = {
+  outlet: "",
+  brand: "",
+  status: "",
+  from: "",
+  to: "",
+};
+
 export default function Dashboard() {
+  const {
+    draftFilters,
+    setDraftFilters,
+    setFilters,
+  } = useAudits();
 
-  const [filters, setFilters] = useState({
-    outlet: "",
-    brand: "",
-    status: "",
-    from: "",
-    to: ""
-  });
+  const handleApplyFilters = useCallback(() => {
+    setFilters(draftFilters);
+  }, [draftFilters, setFilters]);
 
-  const handleApplyFilters = () => {
-    console.log("Filters Applied:", filters);
-
-    // Next step:
-    // We'll call the backend API here
-  };
+  const handleResetFilters = useCallback(() => {
+    setDraftFilters(DEFAULT_FILTERS);
+    setFilters(DEFAULT_FILTERS);
+  }, [setDraftFilters, setFilters]);
 
   return (
     <div className="dashboard">
@@ -39,9 +47,10 @@ export default function Dashboard() {
         <Header />
 
         <FilterBar
-          filters={filters}
-          setFilters={setFilters}
+          filters={draftFilters}
+          setFilters={setDraftFilters}
           onApply={handleApplyFilters}
+          onReset={handleResetFilters}
         />
 
         <KPIGrid />

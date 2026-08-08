@@ -1,6 +1,10 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import axios from 'axios'
-import { createAudit, recalculate } from './auditData'
+import {
+  createAudit,
+  recalculate,
+  aggregateAudits
+} from "./auditData";
 
 const AuditContext = createContext(null)
 const AUDIT_STORAGE = 'outlet-audit.records.v1'
@@ -29,7 +33,9 @@ export function AuditProvider({ children }) {
     from: "",
     to: "",
   });
-
+  
+  const [draftFilters, setDraftFilters] = useState(filters);
+  const [searchQuery, setSearchQuery] = useState("");
   useEffect(() => save(AUDIT_STORAGE, audits), [audits])
   useEffect(() => save(PROGRESS_STORAGE, progress), [progress])
 
@@ -102,6 +108,21 @@ export function AuditProvider({ children }) {
 
     return audits.filter((audit) => {
   
+      if (searchQuery.trim()) {
+  
+        const query = searchQuery.toLowerCase();
+  
+        const matches =
+          audit.outletName.toLowerCase().includes(query) ||
+          audit.brand.toLowerCase().includes(query) ||
+          audit.auditorName.toLowerCase().includes(query) ||
+          audit.status.toLowerCase().includes(query) ||
+          audit.id.toLowerCase().includes(query);
+  
+        if (!matches) return false;
+  
+      }
+  
       if (filters.outlet && audit.outletName !== filters.outlet)
         return false;
   
@@ -112,43 +133,87 @@ export function AuditProvider({ children }) {
         return false;
   
       if (filters.from) {
+  
         const from = new Date(filters.from);
+  
         if (new Date(audit.dateTime) < from)
           return false;
+  
       }
   
       if (filters.to) {
-        const to = new Date(filters.to);
-        to.setHours(23, 59, 59, 999);
   
-        if (new Date(audit.dateTime) > to)
+        const to = new Date(filters.to);
+  
+        to.setHours(23,59,59,999);
+  
+        if(new Date(audit.dateTime) > to)
           return false;
+  
       }
   
       return true;
   
     });
   
-  }, [audits, filters]);
-  
+  }, [audits, filters, searchQuery]);
+        
+  console.log("Search:", searchQuery);
+  console.log("Filtered Audits:", filteredAudits.length);
+  console.log(
+    audits.map(a => ({
+      outlet: a.outletName,
+      brand: a.brand,
+      auditor: a.auditorName
+    }))
+  );
+  const analytics = useMemo(() => {
+    return aggregateAudits(filteredAudits);
+  }, [filteredAudits]);
   const value = useMemo(() => ({
+
     audits,
+  
     filteredAudits,
+  
+    analytics,
+  
+    searchQuery,
+    setSearchQuery,
+  
     filters,
     setFilters,
+  
+    draftFilters,
+    setDraftFilters,
+  
     lastAuditor,
+  
     cloudState,
+  
     beginAudit,
+  
     updateAudit,
+  
     removeAudit,
+  
     visit,
+  
     visited: (audit) =>
-      audit.status === "completed" ? 12 : (progress[audit.id] || []),
-    getAudit: (id) => audits.find((audit) => audit.id === id),
+      audit.status === "completed"
+        ? 12
+        : (progress[audit.id] || []),
+  
+    getAudit: (id) =>
+      audits.find((audit) => audit.id === id),
+  
   }), [
     audits,
     filteredAudits,
+    analytics,
+    searchQuery,
     filters,
+    draftFilters,
     lastAuditor,
     cloudState,
     beginAudit,

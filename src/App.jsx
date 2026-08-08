@@ -126,7 +126,43 @@ function CheckpointCard({ item, parameterScore, onChange, onDelete, onPhoto, onP
   return <article className={`checkpoint ${item.status === 'fail' ? 'is-failed' : ''}`}>
     <div className="checkpoint-head"><div className="checkpoint-title">{renaming ? <input value={item.title} onChange={(event) => onChange({ title: event.target.value })} onBlur={() => setRenaming(false)} onKeyDown={(event) => event.key === 'Enter' && setRenaming(false)} autoFocus /> : <h3>{item.title}</h3>}<button type="button" className="icon-button subtle" title="Rename checkpoint" onClick={() => setRenaming(true)}><Pencil size={14} /></button></div><button type="button" className="icon-button danger subtle" title="Delete checkpoint" onClick={onDelete}><Trash2 size={16} /></button></div>
     <StatusPicker value={item.status} onChange={(status) => onChange({ status })} />
-    <div className="timing-grid"><label><span>Deadline time</span><input type="time" value={item.deadlineTime || ''} onChange={(event) => onChange({ deadlineTime: event.target.value })} /></label><label><span>Completion time</span><input type="time" value={item.completedTime || ''} onChange={(event) => onChange({ completedTime: event.target.value })} /></label><div className="delay-readout"><span>Auto delay</span><strong>{delayLabel(item.delayMinutes)}</strong><b className={`delay-badge ${delayTone(delayStatus, item.delayMinutes)}`}>{delayStatus}</b></div></div>
+    <div className="timing-grid">
+
+<label>
+  <span>Deadline Time</span>
+  <input
+    type="time"
+    value={item.deadlineTime || ""}
+    onChange={(e) =>
+      onChange({ deadlineTime: e.target.value })
+    }
+  />
+</label>
+
+<label>
+  <span>Completion Time</span>
+  <input
+    type="time"
+    value={item.completedTime || ""}
+    onChange={(e) =>
+      onChange({ completedTime: e.target.value })
+    }
+  />
+</label>
+
+<div className="delay-readout">
+  <span>Auto Delay</span>
+
+  <strong>{delayLabel(item.delayMinutes)}</strong>
+
+  <b className={`delay-badge ${delayTone(delayStatus, item.delayMinutes)}`}>
+    {delayStatus}
+  </b>
+</div>
+
+</div>
+
+  
     <label className="notes-field"><span>Notes</span><textarea value={item.notes} onChange={(event) => onChange({ notes: event.target.value })} placeholder="Add detail, corrective action, or context…" rows="2" /></label>
     <div className="evidence-row"><input ref={fileInput} className="visually-hidden" type="file" accept="image/*" capture="environment" multiple onChange={(event) => { onPhoto([...event.target.files]); event.target.value = '' }} /><button type="button" className="photo-button" onClick={() => fileInput.current?.click()}><Camera size={16} /> Add photo</button>{item.photos?.length > 0 && <div className="photo-strip">{item.photos.map((photo, index) => <span className="photo-thumb" key={`${photo.base64.slice(-18)}-${index}`}><img src={photo.base64} alt={`Evidence ${index + 1}`} /><button type="button" title="Remove photo" onClick={() => onPhotoDelete(index)}><X size={13} /></button></span>)}</div>}<span className="card-parameter-score">Parameter score <ScoreBadge score={parameterScore} compact /></span></div>
   </article>

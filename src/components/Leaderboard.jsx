@@ -1,74 +1,75 @@
-const outlets = [
-  {
-    rank: 1,
-    name: "Raiganj",
-    score: 96,
-    trend: "▲"
-  },
-  {
-    rank: 2,
-    name: "Malda",
-    score: 93,
-    trend: "▲"
-  },
-  {
-    rank: 3,
-    name: "Cooch Behar",
-    score: 88,
-    trend: "▼"
-  }
-];
+import { Trophy, TrendingUp, TrendingDown } from "lucide-react";
+import { useAudits } from "../AuditContext";
 
 export default function Leaderboard() {
+  const { analytics } = useAudits();
+
+  if (!analytics) return null;
+
   return (
     <div className="card">
 
       <div className="card-header">
         <h2>Outlet Leaderboard</h2>
-        <span>This Week</span>
+
+        <Trophy color="#F59E0B" size={22} />
       </div>
 
-      {outlets.map((outlet) => (
+      {analytics.outlets.length === 0 ? (
+        <p
+          style={{
+            color: "#64748B",
+            padding: "20px",
+          }}
+        >
+          No audits available.
+        </p>
+      ) : (
+        analytics.outlets.map((outlet, index) => (
+          <div
+            key={outlet.outlet}
+            className="leaderboard-row"
+          >
+            <div className="leaderboard-left">
 
-        <div className="leaderboard-row" key={outlet.rank}>
+              <div className="leaderboard-rank">
+                #{index + 1}
+              </div>
 
-          <div className="leaderboard-left">
+              <div>
+                <strong>{outlet.outlet}</strong>
 
-            <div className="rank-circle">
-              {outlet.rank}
+                <p>
+                  {outlet.audits} Audit
+                  {outlet.audits !== 1 ? "s" : ""}
+                </p>
+              </div>
+
             </div>
 
-            <div>
+            <div className="leaderboard-right">
 
-              <strong>{outlet.name}</strong>
+              <span className="leaderboard-score">
+                {outlet.score}%
+              </span>
 
-              <small>Audit Score</small>
+              {index === 0 ? (
+                <TrendingUp
+                  color="#16A34A"
+                  size={18}
+                />
+              ) : (
+                <TrendingDown
+                  color="#EF4444"
+                  size={18}
+                />
+              )}
 
             </div>
 
           </div>
-
-          <div className="leaderboard-right">
-
-            <span className="score">
-              {outlet.score}%
-            </span>
-
-            <span
-              className={
-                outlet.trend === "▲"
-                  ? "trend-up"
-                  : "trend-down"
-              }
-            >
-              {outlet.trend}
-            </span>
-
-          </div>
-
-        </div>
-
-      ))}
+        ))
+      )}
 
     </div>
   );

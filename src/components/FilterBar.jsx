@@ -1,13 +1,13 @@
 export default function FilterBar({
   filters,
   setFilters,
-  onApply
+  onApply,
+  onReset,
 }) {
-
   return (
-
     <section className="filter-bar">
 
+      {/* Outlet */}
       <div className="filter-group">
         <label>Outlet</label>
 
@@ -16,7 +16,7 @@ export default function FilterBar({
           onChange={(e) =>
             setFilters({
               ...filters,
-              outlet: e.target.value
+              outlet: e.target.value,
             })
           }
         >
@@ -27,6 +27,7 @@ export default function FilterBar({
         </select>
       </div>
 
+      {/* Brand */}
       <div className="filter-group">
         <label>Brand</label>
 
@@ -35,19 +36,20 @@ export default function FilterBar({
           onChange={(e) =>
             setFilters({
               ...filters,
-              brand: e.target.value
+              brand: e.target.value,
             })
           }
         >
           <option value="">All Brands</option>
-          <option value="Desi Kadhai">Desi Kadhai</option>
+          <option value="Desi Kadai">Desi Kadai</option>
           <option value="Anna's Kitchen">Anna's Kitchen</option>
           <option value="Little China">Little China</option>
-          <option value="Burg On">Burg On</option>
           <option value="Bake & Shake">Bake & Shake</option>
+          <option value="Bruway">Bruway</option>
         </select>
       </div>
 
+      {/* Status */}
       <div className="filter-group">
         <label>Status</label>
 
@@ -56,7 +58,7 @@ export default function FilterBar({
           onChange={(e) =>
             setFilters({
               ...filters,
-              status: e.target.value
+              status: e.target.value,
             })
           }
         >
@@ -66,6 +68,7 @@ export default function FilterBar({
         </select>
       </div>
 
+      {/* From */}
       <div className="filter-group">
         <label>From</label>
 
@@ -75,12 +78,13 @@ export default function FilterBar({
           onChange={(e) =>
             setFilters({
               ...filters,
-              from: e.target.value
+              from: e.target.value,
             })
           }
         />
       </div>
 
+      {/* To */}
       <div className="filter-group">
         <label>To</label>
 
@@ -90,21 +94,35 @@ export default function FilterBar({
           onChange={(e) =>
             setFilters({
               ...filters,
-              to: e.target.value
+              to: e.target.value,
             })
           }
         />
       </div>
 
-      <button
-        className="primary-btn"
-        onClick={onApply}
+      <div
+        style={{
+          display: "flex",
+          gap: "10px",
+          marginLeft: "auto",
+        }}
       >
-        Apply Filters
-      </button>
+        <button
+          className="primary-button"
+          onClick={onApply}
+        >
+          Apply Filters
+        </button>
+
+        <button
+          className="icon-button"
+          onClick={onReset}
+          type="button"
+        >
+          Reset
+        </button>
+      </div>
 
     </section>
-
   );
-
 }

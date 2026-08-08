@@ -1,79 +1,79 @@
-const departments = [
-  {
-    name: "Kitchen",
-    score: 94,
-    issues: 2,
-  },
-  {
-    name: "Housekeeping",
-    score: 91,
-    issues: 3,
-  },
-  {
-    name: "Cashier",
-    score: 97,
-    issues: 1,
-  },
-  {
-    name: "Admin",
-    score: 88,
-    issues: 5,
-  },
-  {
-    name: "Store",
-    score: 90,
-    issues: 2,
-  },
-  {
-    name: "Security",
-    score: 96,
-    issues: 0,
-  },
-];
+import { useAudits } from "../AuditContext";
 
 export default function DepartmentPanel() {
-    return (
-        <div className="card">
-      
-          <details className="department-dropdown">
-      
-            <summary>
-      
-              <div className="card-header">
-      
-                <h2>Department Performance</h2>
-      
-                <span>This Week</span>
-      
+  const { analytics } = useAudits();
+
+  if (!analytics) return null;
+
+  return (
+    <div className="card">
+
+      <details className="department-dropdown" open>
+
+        <summary className="card-header">
+          <h2>Department Performance</h2>
+        </summary>
+
+        {analytics.departments.length === 0 ? (
+          <p
+            style={{
+              padding: "20px",
+              color: "#64748B",
+            }}
+          >
+            No department data available.
+          </p>
+        ) : (
+          analytics.departments.map((department) => (
+            <div
+              key={department.name}
+              className="department-row"
+            >
+
+              <div className="department-top">
+
+                <strong>{department.name}</strong>
+
+                <span>{department.score}%</span>
+
               </div>
-      
-            </summary>
-      
-            {departments.map((dept) => (
-      
-              <div className="department-row" key={dept.name}>
-      
-                <div className="department-info">
-      
-                  <strong>{dept.name}</strong>
-      
-                  <small>{dept.issues} issues</small>
-      
-                </div>
-      
-                <div className="department-score">
-      
-                  {dept.score}%
-      
-                </div>
-      
+
+              <div className="department-progress">
+
+                <div
+                  className="department-progress-fill"
+                  style={{
+                    width: `${department.score}%`,
+                    background:
+                      department.score >= 85
+                        ? "#16A34A"
+                        : department.score >= 70
+                        ? "#F59E0B"
+                        : "#DC2626",
+                  }}
+                />
+
               </div>
-      
-            ))}
-      
-          </details>
-      
-        </div>
-      );
-    }
-    
+
+              <div className="department-bottom">
+
+                <small>
+                  {department.failures} Failed
+                </small>
+
+                <small>
+                  {department.delays} Delayed
+                </small>
+
+              </div>
+
+            </div>
+          ))
+        )}
+
+      </details>
+
+    </div>
+  );
+}
+
